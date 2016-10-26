@@ -13,13 +13,18 @@
         </li>
     </ul>-->
     <ul>
-        <li ng-repeat="phone in datas track by $index">
+        <!--1.ng-init在当前作用域下声明一个变量 ng-init="prent=$index"  {{parent=$index}}-->
+        <!--2.使用(key,value)的方式获取索引-->
+        <!--<li ng-repeat="(parent,phone) in datas track by $index" >
             {{phone.name}}
             <ul>
-                <li ng-repeat="type in phone.type track by $index">
-                    {{type}}
+                <li ng-repeat="(child,type) in phone.type track by $index">
+                   {{parent}}{{type}}{{child}}
                 </li>
             </ul>
+        </li>-->
+        <li ng-repeat="(key,value) in obj">
+            {{key}}{{value}}
         </li>
     </ul>
 </div>
@@ -31,6 +36,11 @@
             {name:'iphone',type:['iphone7','iphone8']},
             {name:'xiaomi',type:['mix','note2','note8']},                   {name:'三星',type:['note','Galaxy']}
         ];
+        $scope.obj = {
+            name:'zfpx',
+            age:8,
+            address:'回龙观东大街'
+        };
         //要遍历谁就要把当前遍历的内容写在当前标签上
     }]);
 </script>
