@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <!--<ul>
+        <li ng-repeat="val in datas track by $index">
+            {{val}}{{$index}}
+            {{$even}} {{$odd}} {{$first}} {{$last}} {{$middle}}
+        </li>
+    </ul>-->
+    <ul>
+        <li ng-repeat="phone in datas track by $index">
+            {{phone.name}}
+            <ul>
+                <li ng-repeat="type in phone.type track by $index">
+                    {{type}}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('zfModule',[]);
+    app.controller('myCtrl',['$scope',function ($scope) {
+        $scope.datas = [
+            {name:'iphone',type:['iphone7','iphone8']},
+            {name:'xiaomi',type:['mix','note2','note8']},                   {name:'三星',type:['note','Galaxy']}
+        ];
+        //要遍历谁就要把当前遍历的内容写在当前标签上
+    }]);
+</script>
+</body>
+</html>

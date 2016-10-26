@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+{{name}}
+{{arr[0]}}
+{{obj.chinese}}
+<div ng-click="fn()">hello</div>
+{{fn()}}
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module("zfModule", []);
+    app.run(["$rootScope", function (a) {
+        a.name = "zfpx1";
+    }]);
+    //防止注入的参数被压缩，采用数组的方式，数组中的字符串不会被压缩
+    app.controller("myCtrl", ["$scope", "$rootScope", function (a, b) {
+        a.name = "zfpx";
+        a.arr = [1,2,3,4];
+        a.obj = {chinese:'语文'};
+        a.fn = function () {
+            alert('1');
+            //return '中国';//执行最少两次
+        };
+    }]);
+</script>
+</body>
+</html>
