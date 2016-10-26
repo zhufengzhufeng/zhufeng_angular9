@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-controller="carCtrl">
+<table class="table table-bordered ">
+    <tr>
+        <th><input type="checkbox">全选</th>
+        <th>商品名称</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>小计</th>
+        <th>操作</th>
+    </tr>
+</table>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('carCtrl',['$scope',function ($scope) {
+        $scope.products = [
+            {selected:true,name:'爱仕达 30CM炒锅不粘锅',price:30,count:1},
+            {selected:false,name:'60CM炒锅不粘锅',price:60,count:2},
+            {selected:true,name:'iphone',price:380,count:5},
+            {selected:true,name:'xiaomi',price:3899,count:1}
+        ]
+    }])
+</script>
+</body>
+</html>
