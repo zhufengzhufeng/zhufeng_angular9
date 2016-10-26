@@ -1,10 +1,10 @@
-姜文   qq:1035465284   phone:18310349227
-全日前三周 周三周四 angular  
-第四 五周 gulp webpack react
+锟斤拷锟斤拷   qq:1035465284   phone:18310349227
+全锟斤拷前锟斤拷锟斤拷 锟斤拷锟斤拷锟斤拷锟斤拷 angular  
+锟斤拷锟斤拷 锟斤拷锟斤拷 gulp webpack react
 
-周末node
+锟斤拷末node
 git 
-前两周node基础
-三周 express + mongodb
-四周 博客
-五周 聊天室
+前锟斤拷锟斤拷node锟斤拷锟斤拷
+锟斤拷锟斤拷 express + mongodb
+锟斤拷锟斤拷 锟斤拷锟斤拷
+锟斤拷锟斤拷 锟斤拷锟斤拷锟斤拷

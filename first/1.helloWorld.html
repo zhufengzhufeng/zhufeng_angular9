@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--ng-app代表angular从哪里开始启动，并且赋予一个根作用域$rootScope-->
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body >
+<!--双向数据绑定 一定是表单类型可以双向绑定-->
+<input type="text" ng-model="name">
+{{name}}
+<!--<%=name%>-->
+<!--想让元素双向绑定就添加一个ng-model属性（指令）
+    在当前作用域下绑定一个name属性（变量）
+    如果当前作用域下没有，则表示创建一个name属性挂载在当前作用域下
+    {{}}取出变量name的值
+-->
+<script src="./node_modules/angular/angular.js"></script>
+<script>
+    //1.当我们引入angularjs后，会提供一个angular全局对象
+    console.log(angular);
+</script>
+</body>
+</html>

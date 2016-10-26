@@ -7,5 +7,10 @@ file->settings->plugin->browser->markdown navigator-> install
 ## 设置编码格式
 file settings->encoding->编码格式utf8
 
-## 设置快捷键 
+## 设置快捷键  
 file settings-> live template ->选择在哪里新增模板-> + 设置快捷键和内容-> define->apply+ok
+
+## 改变文字大小
+file settings -> general -> change fontSize
+
+
