@@ -8,14 +8,26 @@
 <body ng-controller="carCtrl">
 <table class="table table-bordered ">
     <tr>
-        <th><input type="checkbox">全选</th>
+        <th><input type="checkbox" ng-model="selectAll">全选</th>
         <th>商品名称</th>
         <th>单价</th>
         <th>数量</th>
         <th>小计</th>
         <th>操作</th>
     </tr>
-
+    <tr ng-repeat="product in products track by $index">
+        <td><input type="checkbox" ng-model="product.selected"></td>
+        <td>{{product.name}}</td>
+        <td>{{product.price}}</td>
+        <td><input type="text" ng-model="product.count"></td>
+        <td>{{product.price*product.count}}</td>
+        <td><button class="btn btn-danger" ng-click="del(product)">删除</button></td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            总价 {{sum()}}
+        </td>
+    </tr>
 </table>
 <script src="node_modules/angular/angular.js"></script>
 <script>
@@ -26,17 +38,34 @@
             {selected:false,name:'60CM炒锅不粘锅',price:60,count:2},
             {selected:true,name:'iphone',price:380,count:5},
             {selected:true,name:'xiaomi',price:3899,count:1}
-        ]
-    }])
+        ];
+        $scope.sum = function () {
+            var total = 0;
+            $scope.products.forEach(function (item) {
+                total+=item.price*item.count;
+            });
+            return total;
+        };
+        $scope.del = function (p) {
+            //p代表当前要删除的那一项，在数组中移出掉那一项
+            console.log(p); //filter
+            //如果这一项是p这一项 返回false
+            $scope.products = $scope.products.filter(function (item,index) {
+                return item!=p
+            });
+        };
+        //全选 点击全选时 每个商品的checkbox要根据全选的值来确定（全选为true都为true）
+        //每一个商品的选择框 如果有一个为false 则全选状态为false 都为true 则全选为true(假设法)
+    }]);
 </script>
 
 
 <!--<tr>
-    <td><input type="checkbox" ng-model="products[0].selected"></td>
-    <td>{{products[0].name}}</td>
-    <td>{{products[0].price}}</td>
-    <td><input type="text" ng-model="products[0].count"></td>
-    <td>{{products[0].price*products[0].count}}</td>
+    <td><input type="checkbox" ng-model="products.selected"></td>
+    <td>{{products.name}}</td>
+    <td>{{products.price}}</td>
+    <td><input type="text" ng-model="products.count"></td>
+    <td>{{products.price*products.count}}</td>
     <td><button>删除</button></td>
 </tr>-->
 </body>
