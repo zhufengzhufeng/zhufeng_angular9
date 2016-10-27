@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--Element-->
+<my-border ></my-border>
+<!--Attribute-->
+<div my-border eat drink sleep="睡觉">红色边框</div>
+<div my-border>123123</div>
+<!--class-->
+<div class="my-border"></div>
+<!--comment-->
+<!-- directive:my-border -->
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    //指令是不依赖于控制器的,默认指令时不会产生独立作用域的
+    var app = angular.module('appModule',[]);
+    //指令分为两种  装饰型指令 组件式指令
+
+    //自定义指令 指令的名字 和指令的定义
+    //装饰
+    app.directive('myBorder',function () {
+        return {
+            restrict:'A',
+            link:function (scope,element,attrs) { //直接用来操作dom元素
+                //scope是当前作用域 $rootScope
+                console.log(scope);
+                //element 当前元素 指令所在的元素
+                console.log(element); //element是jq对象 被angular.element包装过的对象
+                element.css('outline','1px dashed red');
+                //当前元素上所有属性的集合
+                console.log(attrs);
+            }
+        }
+    });
+    //组件
+   /* app.directive('myBorder',function () {
+        return {
+            restrict:'ECMA',
+            template:`<div>
+                      <h1>hello</h1>
+                      </div>`,//默认将模板插入到当前的指令中，默认使用范围是EA,
+            replace:true //将原有指令替换掉，template里面的标签只能有一个根节点
+        }
+    });*/
+</script>
+<script>
+</script>
+</body>
+</html>

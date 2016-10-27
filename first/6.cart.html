@@ -27,13 +27,14 @@
         <td><button class="btn btn-danger" ng-click="del(product)">删除</button></td>
     </tr>
     <tr>
-        <td colspan="6">
-            总价 {{sum()}}
-            <select ng-model="na" ng-options="dis.value as dis.name for dis in discounts">
-                <option value="">请选择</option>
-            </select>
-        </td>
-    </tr>
+    <td colspan="6">
+        总价 {{sum()}}
+        <select ng-model="na" ng-options="dis.value as dis.name for dis in discounts">
+            <option value="">请选择</option>
+        </select>
+        折后价格 {{sum()*na}}
+    </td>
+</tr>
 </table>
 <script src="node_modules/angular/angular.js"></script>
 <script>
@@ -41,7 +42,7 @@
     app.controller('carCtrl',['$scope',function ($scope) {
         //后台给我们一个数据列表 可打折
         //$scope.na = 0.8; //默认指定选中的value的那一项
-        $scope.discounts=[{name:'打一折',value:0.1},{name:'打八折',value:0.8},{name:'打九折',value:0.9}];
+        $scope.discounts=[{name:'打一折',value:0.3},{name:'打八折',value:0.8},{name:'打九折',value:0.9}];
         //as for in  把程序员看的值 作为 客户端看的 for 一条 in 多条
 
 
@@ -50,7 +51,7 @@
         $scope.products = [
             {selected:true,name:'爱仕达 30CM炒锅不粘锅',price:30,count:1},
             {selected:true,name:'60CM炒锅不粘锅',price:60,count:2},
-            {selected:true,name:'iphone',price:380,count:5},
+            {selected:true,name:'iphone',price:99.9999,count:5},
             {selected:true,name:'xiaomi',price:3899,count:1}
         ];
         $scope.selectAll = false;
