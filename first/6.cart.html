@@ -19,13 +19,19 @@
         <td><input type="checkbox" ng-model="product.selected" ng-click="every()"></td>
         <td>{{product.name}}</td>
         <td>{{product.price}}</td>
-        <td><input type="text" ng-model="product.count"></td>
+        <td><button ng-click="product.count=product.count-1" ng-disabled="product.count==1">-</button>
+            <input type="text" ng-model="product.count" ng-readonly="true">
+            <button ng-click="product.count=product.count+1">+</button>
+        </td>
         <td>{{product.price*product.count}}</td>
         <td><button class="btn btn-danger" ng-click="del(product)">删除</button></td>
     </tr>
     <tr>
         <td colspan="6">
             总价 {{sum()}}
+            <select ng-model="na" ng-options="dis.value as dis.name for dis in discounts">
+                <option value="">请选择</option>
+            </select>
         </td>
     </tr>
 </table>
@@ -33,6 +39,14 @@
 <script>
     var app = angular.module('appModule',[]);
     app.controller('carCtrl',['$scope',function ($scope) {
+        //后台给我们一个数据列表 可打折
+        //$scope.na = 0.8; //默认指定选中的value的那一项
+        $scope.discounts=[{name:'打一折',value:0.1},{name:'打八折',value:0.8},{name:'打九折',value:0.9}];
+        //as for in  把程序员看的值 作为 客户端看的 for 一条 in 多条
+
+
+
+
         $scope.products = [
             {selected:true,name:'爱仕达 30CM炒锅不粘锅',price:30,count:1},
             {selected:true,name:'60CM炒锅不粘锅',price:60,count:2},
@@ -61,7 +75,7 @@
             //当我点击全选checkbox时触发的时间
             $scope.products.forEach(function (item) {
                 //当前全选状态为true 所有的都为true
-                    item.selected = $scope.selectAll;
+                item.selected = $scope.selectAll;
             });
         };
         //点击下面每一个按钮 如果都为true 才为全选，如果有一个为false则为false

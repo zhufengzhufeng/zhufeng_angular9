@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<textarea cols="30" rows="10" ng-model="hello"></textarea>
+<select ng-change="sel()" ng-model="s">
+    <option value="1">香蕉</option>
+    <option value="2">苹果</option>
+    <option value="3">橘子</option>
+</select>
+<input type="text" ng-model="name" id="ip" ng-change="change()" >
+<p ng-bind="s"></p>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('myCtrl',['$scope',function ($scope) {
+        $scope.name = 'hello'; //会自动给表单元素设置value值
+        $scope.hello = '123';
+        $scope.s = '2'
+        $scope.sel = function () {
+            alert($scope.s)
+        };
+    }])
+</script>
+</body>
+</html>
