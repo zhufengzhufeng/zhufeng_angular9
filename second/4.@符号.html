@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="my" >
+外面<input type="text" ng-model="title">
+<test t="{{title}}"></test>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app =angular.module('appModule',[]);
+    app.controller('my',function ($scope) {
+        $scope.title = '2'
+    });
+    app.directive('test',function () {
+        return {
+            template:'里面<input type="text" ng-model="title"/>',
+            scope:{
+                title:'@t' //取当前指令的属性t对应的字符串 $scope.m = 2
+            }
+        }
+    });
+</script>
+</body>
+</html>
