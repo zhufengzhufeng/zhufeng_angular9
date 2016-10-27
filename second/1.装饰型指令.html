@@ -21,6 +21,7 @@
 <div drag></div>
 <div drag></div>
 <div drag></div>
+<script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/angular/angular.js"></script>
 <script>
     var app = angular.module('appModule',[]);
@@ -31,17 +32,17 @@
                 //onmousedown  onmousemove onmouseup
                 element.on('mousedown',function (e) {
                     //         鼠标距离浏览器的距离
-                    var disx = e.pageX - this.offsetLeft;
-                    var disy = e.pageY - this.offsetTop;
-                    angular.element(document).on('mousemove',function (e) {
+                    var disx = e.pageX - $(this).position().left;
+                    var disy = e.pageY - $(this).position().top;
+                    $(document).on('mousemove',function (e) {
                         //计算盒子距离浏览器的边缘
                         element.css({
-                            top:e.pageY - disy+'px',
-                            left:e.pageX - disx+'px'
+                            top:e.pageY - disy,
+                            left:e.pageX - disx
                         });
                     });
-                    angular.element(document).on('mouseup',function () {
-                        angular.element(document).off();
+                    $(document).on('mouseup',function () {
+                        $(document).off();
                     });
                     e.preventDefault();
                 });

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<panel title="这是一个误会">这是第一个面板</panel>
+<panel title="这是另一个误会">这是第二个面板</panel>
+<panel title="真的是一个误会">这是第三个面板</panel>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.directive('panel',function () {
+        return {
+            restrict:'E',
+            templateUrl:"panel.html",//动态引入进来
+            //保留指令中夹着的内容
+            transclude:true, //要将保留的内容显示，需要在要显示的标签上增加,ng-translude 产生一个独立作用域
+            /*link:function (scope,element,attrs) { //链接函数 链接视图和作用域的
+                scope.title = attrs.title; //获取传入的属性
+            },*/
+            scope:{
+                title:'@' // 引用的是字符串,在当前作用域下，声明一个title属性，找到当前指令上的title属性将title对应的字符串拿到自己家作用域声明一个title
+            }//scope:true
+            //让指令产生独立作用域
+        }
+    });
+</script>
+</body>
+</html>
