@@ -1,7 +1,8 @@
 <div class="panel panel-success">
-    <div class="panel-heading">{{title}}</div>
-    <div class="panel-body" >
-        <button ng-click="">说标题</button>
+    <div class="panel-heading" >{{title}}</div>
+    <div class="panel-body"  >
+        <span ng-transclude></span>
+        <button ng-click="q({m:title})">说标题</button>
     </div>
-    <div class="panel-footer"></div>
+    <div class="panel-footer" >{{footer}}</div>
 </div>
