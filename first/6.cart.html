@@ -8,7 +8,7 @@
 <body ng-controller="carCtrl">
 <table class="table table-bordered ">
     <tr>
-        <th><input type="checkbox" ng-model="selectAll">全选</th>
+        <th><input type="checkbox"  ng-model="selectAll" ng-click="all()">全选</th>
         <th>商品名称</th>
         <th>单价</th>
         <th>数量</th>
@@ -16,7 +16,7 @@
         <th>操作</th>
     </tr>
     <tr ng-repeat="product in products track by $index">
-        <td><input type="checkbox" ng-model="product.selected"></td>
+        <td><input type="checkbox" ng-model="product.selected" ng-click="every()"></td>
         <td>{{product.name}}</td>
         <td>{{product.price}}</td>
         <td><input type="text" ng-model="product.count"></td>
@@ -35,10 +35,11 @@
     app.controller('carCtrl',['$scope',function ($scope) {
         $scope.products = [
             {selected:true,name:'爱仕达 30CM炒锅不粘锅',price:30,count:1},
-            {selected:false,name:'60CM炒锅不粘锅',price:60,count:2},
+            {selected:true,name:'60CM炒锅不粘锅',price:60,count:2},
             {selected:true,name:'iphone',price:380,count:5},
             {selected:true,name:'xiaomi',price:3899,count:1}
         ];
+        $scope.selectAll = false;
         $scope.sum = function () {
             var total = 0;
             $scope.products.forEach(function (item) {
@@ -51,12 +52,29 @@
             console.log(p); //filter
             //如果这一项是p这一项 返回false
             $scope.products = $scope.products.filter(function (item,index) {
-                return item!=p
+                return item!=p;
             });
         };
         //全选 点击全选时 每个商品的checkbox要根据全选的值来确定（全选为true都为true）
         //每一个商品的选择框 如果有一个为false 则全选状态为false 都为true 则全选为true(假设法)
+        $scope.all = function () {
+            //当我点击全选checkbox时触发的时间
+            $scope.products.forEach(function (item) {
+                //当前全选状态为true 所有的都为true
+                    item.selected = $scope.selectAll;
+            });
+        };
+        //点击下面每一个按钮 如果都为true 才为全选，如果有一个为false则为false
+        $scope.every = function () {
+            var result = $scope.products.find(function (item) {
+                return item.selected==false; //如果有一个为false
+            });
+            $scope.selectAll = result?false:true;
+        };
+        //判断全选初始状态
+        $scope.every();
     }]);
+
 </script>
 
 
