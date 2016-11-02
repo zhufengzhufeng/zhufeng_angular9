@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .show{
+            display: block;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="flag=!flag">{{!flag?'显示':'隐藏'}}</button>
+<div ng-if="arr.length">
+    这个数组是空的了不需要显示
+    <div ng-repeat="a in arr ">{{a}}</div>
+</div>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller("myCtrl",["$scope",function ($scope) {
+        //切换样式时要不就是显示要不就是隐藏，或者将dom删除或增加
+        //简单的切换显示或者隐藏可以使用ng-show=true/false / ng-hide
+        //ng-show/ng-hide用的是我们的样式操作
+        //ng-if为true时创建作用域，移出dom元素
+
+        //在频繁切换dom的时候，很浪费性能，采用切换样式
+        //一次性内容可以采用ng-if （会产生独立作用域）
+        $scope.arr = [];
+        //ng-show在频繁切换时使用，初始化时消耗较高，ng-if频繁切换时性能较高，但是初始化时可能不消耗性能
+        //ng-if和ng-repeat一般搭配使用
+    }]);
+</script>
+</body>
+</html>

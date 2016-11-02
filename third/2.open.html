@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--组件式-->
+<open title="标题1">这是第一个展开的内容</open>
+<open title="标题2">这是第二个展开的内容</open>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.directive('open',function () {
+        return {
+            restrict:'E',
+            templateUrl:'tmpl/open.html',
+            transclude:true,
+            link:function (scope) {
+                scope.flag = true; //先声明默认显示
+                scope.show = function () {
+                    scope.flag=! scope.flag;//点击后切换状态
+                }
+            },
+            scope:{
+                tit:'@title'
+            }
+        }
+    })
+</script>
+</body>
+</html>

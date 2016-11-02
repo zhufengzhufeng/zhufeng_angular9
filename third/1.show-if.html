@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-<button>显示/隐藏</button>
-<div>
+<body ng-controller="myCtrl">
+<button ng-click="toggle()">显示/隐藏</button>
+<div ng-show="visible">
     这是对应的内容
 </div>
 <script src="node_modules/angular/angular.js"></script>
 <script>
     var app = angular.module('appModule',[]);
-
+    app.controller("myCtrl",["$scope",function ($scope) {
+        $scope.visible = true;
+        $scope.toggle = function () {
+            $scope.visible = !$scope.visible;
+        }
+    }]);
 </script>
 </body>
 </html>
