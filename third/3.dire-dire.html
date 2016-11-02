@@ -13,13 +13,18 @@
         return {
             restrict:'E',
             //因为其他指令都是需要girl的所以girl要吸收这个品质
-            controller:function () {//这个方法用来创建公有的方法
-               var kinds = [];//存放所有品质
+            controller:function ($scope) {//这个方法用来创建公有的方法
+               $scope.kinds = [];//存放所有品质
                this.addKinds = function (kind) {
-                   kinds.push(kind);
-                   console.log(kinds);
+                   $scope.kinds.push(kind);
                }
-            }
+            },
+            //当前指令的控制器就是当前指令的作用域,指令中的控制器的scope和link函数中的scope是同一个
+            link:function ($scope,ele) {
+                ele.on("click",function () {
+                    alert($scope.kinds);
+                });
+            },
         }
     });
     app.directive('loveMoney',function () {
