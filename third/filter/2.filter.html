@@ -6,16 +6,20 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
 </head>
 <body ng-controller="myCtrl">
+<!--排序 orderby-->
+
+
+
 <!--我们经常需要控制刷新的时间{debounce:2000}  失去焦点更新{updateOn:'blur'}-->
 <input type="text" ng-model="query" ng-model-options="{updateOn:'blur'}">
 <table class="table table-bordered">
     <tr>
         <td>品类</td>
-        <td>价格</td>
-        <td>保质期</td>
+        <td ng-click="flag1='price';flag=!flag">价格</td>
+        <td ng-click="flag1='date';flag=!flag">保质期</td>
     </tr>
-    <!--通过字段来筛查 字段是字符串-->
-    <tr ng-repeat="data in datas | filter:{price:query,date:query} track by $index">
+    <!--通过字段来筛查 字段是字符串 {}中写多个参数&&-->
+    <tr ng-repeat="data in datas | filter:{price:query} | orderBy:flag1:flag track by $index">
         <td>{{data.name}}</td>
         <td>{{data.price}}</td>
         <td>{{data.date}}</td>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<img ng-src="{{href}}" alt="">
+<a ng-href="{{href}}">go BD</a>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('myCtrl',function ($scope,$timeout) {
+        //为了防止404 我们不能让src直接请求路径,并且需要用{{}}取值
+        //$scope.href = 'http://img6.bdstatic.com/img/image/smallpic/chongwu1101.jpg';
+        //angular中给你免费使用的都叫服务
+        $timeout(function () {
+            $scope.href = 'http://www.baidu.com';
+        },2000);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .show{
+            display: block;
+            color:red
+        }
+        .hide{
+            display: none;
+            color: green;
+        }
+        .back1{
+            background: yellow;
+        }
+        .back{
+            background: blue;
+        }
+    </style>
+</head>
+<body ng-controller="myCtrl">
+<!--<div class="{{flag?'show':'hide'}}">要不显示否则隐藏</div>-->
+<!--根据true，false执行样式-->
+<!--<div ng-class="{true:'show',false:'hide'}[flag]"></div>-->
+<!--1.class和ng-class可以共存-->
+<div ng-class="{show:true,hide:false,back:true}" class="back1">angular baby</div>
+<div ng-style="{color:'yellowgreen',backgroundColor:'blue'}">react MM</div>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('myCtrl',function ($scope) {
+        $scope.flag = true
+    })
+</script>
+</body>
+</html>
