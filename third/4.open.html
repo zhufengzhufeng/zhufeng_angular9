@@ -11,6 +11,7 @@
     <open title="标题2">这是第二个展开的内容</open>
     <open title="标题3">这是第三个展开的内容</open>
 </group>
+
 <script src="node_modules/angular/angular.js"></script>
 <script>
     var app = angular.module('appModule',[]);
@@ -18,13 +19,23 @@
         return {
             controller:function ($scope) {
                 //所有作用域
-                $scope.scps = [];
+                $scope.scps = []; //管理着三个open的作用域
                 //子指令需要调用父指令中的add方法，将作用域交给父指令
                 this.add = function (s) {
                     $scope.scps.push(s);
                 };
                 //这个方法是为了，判断除了当前传过来的其他的作用域下的flag都为false
-            }
+                //父级会接受一个当前作用域 在当前数组中查找，除了当前的其他都隐藏掉
+                this.close = function (s) { //接受到的是当前点击的这一个
+                    //除了s的其他都关闭掉
+                    $scope.scps.forEach(function (item) { //遍历每一个父亲管理的作用域，当不是点击的那一个的时候，其他的flag都为false
+                        if(item!=s){
+                            item.flag = false;
+                        }
+                    })
+                }
+            },
+            scope:{}
         }
     });
     app.directive('open',function () {
@@ -35,11 +46,12 @@
             transclude:true,
             link:function (scope,element,attrs,groupCtrl) {
                 //交给group所管理
-                groupCtrl.add(scope);
-                scope.flag = true;
+                groupCtrl.add(scope); //当前指令的作用域
+                scope.flag = false; //让每一个内容区默认显示
                 scope.show = function () {
-                    scope.flag = !scope.flag;
+                    scope.flag = !scope.flag; //取反
                     //单击后自己取反，并且告诉父级当前点击的是哪一个除了这一个其他作用域下flag都为false
+                    groupCtrl.close(scope);
                 }
             },
             scope:{
