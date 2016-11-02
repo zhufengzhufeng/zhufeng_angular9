@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-controller="myCtrl">
+<!--我们经常需要控制刷新的时间{debounce:2000}  失去焦点更新{updateOn:'blur'}-->
+<input type="text" ng-model="query" ng-model-options="{updateOn:'blur'}">
+<table class="table table-bordered">
+    <tr>
+        <td>品类</td>
+        <td>价格</td>
+        <td>保质期</td>
+    </tr>
+    <!--通过字段来筛查 字段是字符串-->
+    <tr ng-repeat="data in datas | filter:{price:query,date:query} track by $index">
+        <td>{{data.name}}</td>
+        <td>{{data.price}}</td>
+        <td>{{data.date}}</td>
+    </tr>
+</table>
+<script src="../node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('myCtrl',function ($scope) {
+        $scope.datas = [
+            {name:'牙刷',price:30,date:356},
+            {name:'牙膏',price:45,date:1000},
+            {name:'牙杯子',price:10,date:3}
+        ];
+    });
+    //angular自带的过滤器
+    //1.number过滤器，将内容转换成数字型
+</script>
+</body>
+</html>
