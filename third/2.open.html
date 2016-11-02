@@ -8,6 +8,7 @@
 <!--组件式-->
 <open title="标题1">这是第一个展开的内容</open>
 <open title="标题2">这是第二个展开的内容</open>
+<open title="标题3">这是第三个展开的内容</open>
 <script src="node_modules/angular/angular.js"></script>
 <script>
     var app = angular.module('appModule',[]);
@@ -26,7 +27,11 @@
                 tit:'@title'
             }
         }
-    })
+    });
+    //在同一个时间内只能打开一个open。
+    //1.首先先把每个人的scope都交给一个人管理 ,管理者上肯定要有一个接受的方法
+    //2.当我点击确定的某一个时，将自己的取反，在告诉管理者，除了自己，全部关闭，管理者要拥有一个关闭的方法
+    //管理者也是一个指令，指令之间的交互
 </script>
 </body>
 </html>

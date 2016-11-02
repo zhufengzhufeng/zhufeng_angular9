@@ -1,0 +1,18 @@
+<div class="fl">
+    <div class="title" ng-click="show()">{{tit}}</div>
+    <div class="content" ng-transclude ng-show="flag"></div>
+</div>
+<style>
+    .fl{float: left;margin: 10px}
+    .title{
+        width: 150px;
+        line-height: 30px;
+        background: red;
+    }
+    .content{
+        width: 150px;
+        height: 150px;
+        background: green;
+        -webkit-box-reflect: below 1px -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(.5, transparent), to(rgba(3,3,3,.2)));
+    }
+</style>
