@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{'abcdefg' | captialize:3}}
+{{'200' | currency}}
+<!--时间戳-->
+{{1478140286225 | date:'yyyy年dd mm分ss秒'}}
+<div ng-controller="myCtrl">
+    {{time}}
+</div>
+
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('myCtrl',function ($scope,dateFilter,filterFilter,orderByFilter) {
+        //在想使用的过滤器后面增加Filter
+        $scope.t = '1231231232131';
+        $scope.time = dateFilter($scope.t,'yyyy-MM');
+        $scope.arr = [{name:'苹果',price:30},{name:'香蕉',price:22},{name:'橘子',price:13}];
+        $scope.data = filterFilter($scope.arr,{price:3});
+        //根据age排序
+        $scope.arrs = [{age:30},{age:32},{age:12},{age:321},{age:3111},{age:0}];
+        $scope.datas = orderByFilter($scope.arrs,'age',true);
+        console.log($scope.datas);
+    });
+    app.filter('currency',function () {
+        return function (input,start,end) {
+            return 'jw￥'+input
+        }
+    });
+    app.filter('captialize',function (uppercaseFilter) {
+        //uppercaseFilter引入angular自带的过滤器
+        return function (input,start,end) {
+            //input要格式化的数据
+            //最后将格式化好的内容返回即可
+            return uppercaseFilter(input.slice(0,start))+input.slice(start)
+        }
+    });
+</script>
+</body>
+</html>
