@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var obj = {
+        a:function () {
+            setTimeout(()=>{
+                console.log(this);//自己作用域下没有this指向，从而解决了this的问题
+            },200)
+        }
+    }
+    obj.a();
+</script>
+</body>
+</html>

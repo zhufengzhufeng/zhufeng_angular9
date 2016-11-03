@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div ng-controller="firstCtrl"></div>
+<div ng-controller="secondCtrl"></div>
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    //constant和value比较用法一样，但是constant不算做服务，因为他没有调用provider constant可以配置但是配置的时候不能增加Provider
+    app.value('calc',{
+        '+': (a,b)=>  (a+b),
+        '-': (a,b) => (a-b),
+        '*': (a,b) => (a*b),
+        '/': (a,b) => (a/b)
+    }); //factory的返回值,会默认将对象包装一层函数，传递给factory
+    app.controller('firstCtrl',function (calc) {
+        console.log(calc['+'](1,2));
+    });
+    app.controller('secondCtrl',function (calc) {
+        console.log(calc['+'](1,2));
+    });
+</script>
+</body>
+</html>

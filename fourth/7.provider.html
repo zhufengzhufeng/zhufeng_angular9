@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div ng-controller="firstCtrl"></div>
+<div ng-controller="secondCtrl"></div>
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    //服务 $timeout $interval $http 将公共的功能提取出来,并且服务是单例的
+    // + - * /四个方法要在firstCtrl中使用secondCtrl使用
+
+    //angular提供了5种自定义服务 一种装饰
+    //最大的服务 provider
+    app.config(function (calcProvider) {
+        //calcProvider是我们的  calc声明的构造函数的实例
+        calcProvider.currency = '&';
+    });
+    app.provider('calc',function () { //provider是唯一一个可以配置的,其他的服务都不能配置
+        this.currency = '￡';
+        this.$get = function () {
+            return {
+                '+': (a,b)=>  this.currency+(a+b),
+                '-': (a,b) => this.currency+(a-b),
+                '*': (a,b) => this.currency+(a*b),
+                '/': (a,b) => this.currency+(a/b)
+            }
+        }
+    });
+    //默认会new provider的构造函数并且调用$get方法
+    app.controller('firstCtrl',function (calc) {
+        console.log(calc['+'](1,2));
+    });
+    app.controller('secondCtrl',function (calc) {
+        console.log(calc['+'](1,2));
+    });
+</script>
+</body>
+</html>

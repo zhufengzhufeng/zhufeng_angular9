@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div ng-controller="firstCtrl"></div>
+<div ng-controller="secondCtrl"></div>
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.service('calc',function () {
+        this['+'] = function (a,b) {return a+b;};
+        this['-'] = function (a,b) {return a-b;};
+        this['*'] = function (a,b) {return a*b;};
+        this['/'] = function (a,b) {return a/b;};
+    });
+    //provider> factory > service
+    //是以前factory的返回对象的构造函数
+    app.controller('firstCtrl',function (calc) {
+        console.log(calc['+'](1,2));
+    });
+    app.controller('secondCtrl',function (calc) {
+        console.log(calc['+'](1,2));
+    });
+</script>
+</body>
+</html>

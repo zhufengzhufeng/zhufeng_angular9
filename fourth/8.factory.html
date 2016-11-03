@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div ng-controller="firstCtrl"></div>
+<div ng-controller="secondCtrl"></div>
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.config(function (calcProvider) {
+        calcProvider.currency = '&';
+    });
+    app.factory('calc',function () { //factory直接写provider的$get方法即可
+        this.currency = '￡';
+        return {
+            '+': (a,b)=>  this.currency+(a+b),
+            '-': (a,b) => this.currency+(a-b),
+            '*': (a,b) => this.currency+(a*b),
+            '/': (a,b) => this.currency+(a/b)
+        }
+    });
+    //默认会new provider的构造函数并且调用$get方法
+    app.controller('firstCtrl',function (calc) {
+        console.log(calc['+'](1,2));
+    });
+    app.controller('secondCtrl',function (calc) {
+        console.log(calc['+'](1,2));
+    });
+</script>
+</body>
+</html>
