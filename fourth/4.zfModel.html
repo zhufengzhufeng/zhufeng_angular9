@@ -12,8 +12,11 @@
     var app = angular.module('appModule',[]);
     //1.获取input的值，将值挂载在当前作用域下
     //2.当作用域上的值发生变化,让input赋值，并且更新
-    app.controller('myCtrl',function ($scope) {
-        $scope.name = 'hello'
+    app.controller('myCtrl',function ($scope,$timeout) {
+        $scope.name = 'hello';
+        $timeout(function () {
+            $scope.name = 'hello1';
+        },3000)
     })
     app.directive('zfModel',function () {
         return {
@@ -32,8 +35,13 @@
                 //当数据变化时改变视图
                 scope.$watch(attrs['zfModel'],function (newVal) {
                     //监控值得变化，数据变了，要给视图赋值
+                    element[0].value = newVal; //将最新值赋予我们的element元素
+                });
+                //双向绑定 视图改变数据改变   数据改变视图改变
 
-                })
+                //双向数据绑定：监听输入框的内容，如果内容改变，赋值给作用域,通知视图刷新$apply，当数据变化通过watch方法，监控变化，将最新的值绑定到输入框中;
+
+
             }
         }
     })
