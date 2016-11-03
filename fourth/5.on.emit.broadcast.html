@@ -6,33 +6,45 @@
 </head>
 <body>
 <div ng-controller="parentCtrl">
-    总价格 <input type="text" ng-model="total">
+    总价格 <input type="text" ng-model="total" ng-change="changeTotal()" >
     <div ng-controller="childCtrl">
         商品名称 {{name}}<br>
         商品价格 {{price}}<br>
         商品数量 <input type="text" ng-model="count"><br>
     </div>
 </div>
+<!--平级间如何交互数据-->
+<!--
+$rootScope 可以通过跟作用域传递数据
+<div ng-controller="1"></div> 向上发射 $rootScope   向下发射$rootScope.$broadcast
+<div ng-controller="2"></div>
+-->
 <script src="lib/angular/angular.js"></script>
 <script>
     var app = angular.module('appModule',[]);
     //$on $emit $broadcast
     //控制器不能复用，控制器间要交互数据，要通过事件的方式
     app.controller('parentCtrl',function ($scope) {
+        console.log($scope);
         $scope.total = 10;
         $scope.$on('我要改变数量了请接受',function (event,data) {
           $scope.total = data;
         });
+        //watch一直监控数据的变化，当输入框中的内容改变的时候在使用
+        $scope.changeTotal = function () {//通过事件将最新的数据发射出去
+            $scope.$broadcast('m',  $scope.total);//emit向上发射并且自己也知道
+        };
+        //在人为改变数据时 可以用我们的change来替换掉watch
     });
     app.controller('childCtrl',function ($scope) {
         $scope.price = 10;
         $scope.count = 1;
         $scope.name = '飞机';
-        $scope.$on('我要改变数量了请接受',function (event,data) {
-            console.log(data);
-        });
         $scope.$watch('count',function (newVal) {
             $scope.$emit('我要改变数量了请接受', newVal*$scope.price);//emit向上发射并且自己也知道
+        });
+        $scope.$on('m',function (event,data) {
+            $scope.count = data/$scope.price;
         });
     })
 </script>
