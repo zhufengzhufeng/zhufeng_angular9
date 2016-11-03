@@ -10,7 +10,7 @@
     <div class="form-group">
         <label for="username" class="control-label col-md-2">用户名</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" id="username" ng-model="username" name="username" ng-required="true" ng-pattern="/^\d+$/">
+            <input type="text" class="form-control" id="username" ng-model="username" name="username" ng-required="true" ng-pattern="/^\d+$/" ng-maxlength="10" ng-minlength="4">
         </div>
     </div>
     <!--必须先保证必填，并且保证这个表单被填过了-->
@@ -18,21 +18,21 @@
         用户不能为空!!!
     </div>
     <!--不脏时默认不验证，只有写了内容后才验证-->
-    <div class="alert alert-danger col-md-offset-2 col-md-10" ng-show="myform.username.$error.pattern">
+    <div class="alert alert-danger col-md-offset-2 col-md-10" ng-show="myform.username.$error.pattern" >
         用户名只能为数字
     </div>
     <div class="form-group">
         <label for="email" class="control-label col-md-2">邮箱</label>
         <div class="col-md-10">
-            <input type="email" class="form-control" id="email" ng-model="email" name="email">
+            <input type="email" class="form-control" id="email" ng-model="email" name="email" ng-required="true">
         </div>
     </div>
-    <div class="alert alert-danger col-md-offset-2 col-md-10" >
+    <div class="alert alert-danger col-md-offset-2 col-md-10" ng-show="myform.email.$error.email">
        邮箱验证不通过
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-md-10">
-            <button>提交</button>
+            <button ng-disabled="myform.$invalid">提交</button>
             <!--h5表单会自动验证，要关闭掉h5的验证-->
         </div>
     </div>
