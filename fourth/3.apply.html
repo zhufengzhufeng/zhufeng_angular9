@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<input type="text" ng-model="name" >
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('myCtrl',function ($scope,$interval) {
+        //监控数据的变化
+        $scope.name = 1;
+        var timer = $interval(function () {
+            $scope.name++;//只是变化作用域上的数据，并没有通知视图刷新
+            //$scope.$apply(); //每次angular想更新视图时，就要调用apply方法,通常angular内部的指令会自动调用$apply方法
+        },1000);
+        $interval.cancel(timer);//取消定时器
+        /* $scope.$watch('name',function (newVal,oldVal) {
+              console.log(newVal,oldVal);
+           });
+        //当数据变化时在应用
+        $scope.$apply();*/
+    });
+</script>
+</body>
+</html>

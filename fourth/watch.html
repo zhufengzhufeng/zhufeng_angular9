@@ -6,13 +6,13 @@
 </head>
 <body>
 <div ng-controller="myCtrl">
+    {{name}}
     {{total()}}
 </div>
 <script src="lib/angular/angular.js"></script>
 <script>
     var app  = angular.module('appModule',[]);
     app.controller('myCtrl',function ($scope,$timeout) {
-       $scope.name = 1;
         $timeout(function () {
             $scope.name = 100
         },3000);

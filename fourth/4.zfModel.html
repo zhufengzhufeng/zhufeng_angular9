@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body ng-controller="myCtrl">
+<input type="text" zf-model="name">
+{{name}}
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    //1.获取input的值，将值挂载在当前作用域下
+    //2.当作用域上的值发生变化,让input赋值，并且更新
+    app.controller('myCtrl',function ($scope) {
+        $scope.name = 'hello'
+    })
+    app.directive('zfModel',function () {
+        return {
+            link:function (scope,element,attrs) {
+                console.log(attrs);
+                //监听input输入事件
+                element.on('input',function () {
+                    //给scope下的name或者age赋值 = 当前写入的内容
+                    //视图变化要导致数据变化
+                    scope[attrs['zfModel']] = this.value;
+                    scope.$apply();//当值改变后刷新视图
+                    //console.log(scope.name); //数据变了视图不更新
+                    //scope.name = '我们输入的内容'
+                    //console.log(this.value);
+                });
+                //当数据变化时改变视图
+                scope.$watch(attrs['zfModel'],function (newVal) {
+                    //监控值得变化，数据变了，要给视图赋值
+
+                })
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

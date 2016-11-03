@@ -19,7 +19,6 @@
         $scope.total=()=> { //total方法最少执行两次
             console.log(1);
         };
-        [fn1,fn2,fn3]
         //在所有观察者，如果某一个观察者的回调函数改变了其他的观察者，但是此时每一个函数都已经检测完毕，不会再次刷新页面了，但是页面的数据已经更改了，视图应该刷新，要再次检查，直到没有变化为止，如果有变化一直遍历数组，直到10次停止
         $scope.$watch('fn3',function (newVal,oldVal) {
             //newVal新值  oldValue老值
