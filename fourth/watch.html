@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    {{total()}}
+</div>
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app  = angular.module('appModule',[]);
+    app.controller('myCtrl',function ($scope,$timeout) {
+       $scope.name = 1;
+        $timeout(function () {
+            $scope.name = 100
+        },3000);
+        //[person1,person2,person3]; //在name的回调函数中可能会更改total函数，那就再将数组的每一项在次执行
+        //一共三个病人，查了前两个都没问题，查第三个人，第三个人也没问题，给第一个一脚，在查一次防止三个人中有人动手脚，在查一次，发现第一个人重伤，这轮查完第三个人没在踢了，在查一次，确定完全一致停止检查
+        $scope.total = function () {
+            console.log(1);
+        };
+        //第一次执行total时 有结果了，发现没问题，但是确保没有变化，在执行一次，获得了一个结果，作用域上name发生变化，要确定total是否有改变，发现没有改变，结果确定结束
+    })
+</script>
+</body>
+</html>

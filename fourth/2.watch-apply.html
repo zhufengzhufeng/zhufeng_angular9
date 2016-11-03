@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+{{name}}{{age}}{{total()}}
+<script src="lib/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    //给每一个需要变化的人加一个观察者，如果当前作用域下有一个值发生变化，把当前作用域下的值都进行刷新，拿旧值和新值进行比对（脏值检查），有变化刷新页面
+    app.controller('myCtrl',function ($scope) {
+        $scope.name = 'hello';
+        //会将所有观察者，放到一个数组中，如果其中一个变化，没一个观察者都需要刷新
+        console.log($scope);
+        //尽量减少观察者
+        //脏值检查最多只能进行10次，
+        $scope.total=()=> { //total方法最少执行两次
+            console.log(1);
+        };
+        [fn1,fn2,fn3]
+        //在所有观察者，如果某一个观察者的回调函数改变了其他的观察者，但是此时每一个函数都已经检测完毕，不会再次刷新页面了，但是页面的数据已经更改了，视图应该刷新，要再次检查，直到没有变化为止，如果有变化一直遍历数组，直到10次停止
+        $scope.$watch('fn3',function (newVal,oldVal) {
+            //newVal新值  oldValue老值
+            fn1 = 100
+        });
+        /*$scope.$watch('name',function (newVal,oldVal) {
+            //newVal新值  oldValue老值
+           $scope.age = Math.round(Math.random()*10);
+        });
+        $scope.$watch('age',function () {
+            $scope.name = Math.round(Math.random()*10);
+        });*/
+        $scope.name = 1;
+    })
+</script>
+</body>
+</html>
