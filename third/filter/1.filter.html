@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<!--可自定义保留几位-->
+{{n | number:5}}
+<!--限制型过滤器-->
+{{n | limitTo:3}}
+<!--大小写转换-->
+{{n | uppercase | lowercase}}
+<!--货币过滤器-->
+{{'100.3033' | currency:'€':4}}
+<!--json过滤器-->
+<pre>{{n | json:4}}</pre>
+<!--filter过滤器 用来过滤数据-->
+<script src="../node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('myCtrl',function ($scope) {
+        $scope.n = [1,2,3,{name:123,age:456}]
+    });
+    //angular自带的过滤器
+    //1.number过滤器，将内容转换成数字型
+</script>
+</body>
+</html>
