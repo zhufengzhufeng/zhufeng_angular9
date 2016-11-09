@@ -27,9 +27,7 @@
         </div>
     </form>
     <ul class="list-group">
-        <li class="list-group-item">用户名:zpfx 密码:123456
-            <button class="btn btn-danger btn-xs pull-right">删除</button>
-        </li>
+
     </ul>
 </div>
 <!--
@@ -38,6 +36,25 @@
     3.浏览器遍历数据将数据生成到页面中的ul内
 -->
 <script>
+    //载入页面后先查询一下用户列表
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','/getuser',true);
+    xhr.responseType = 'json'; //设置响应回来的内容为json格式
+    //响应回来的内容是用户列表
+    xhr.onload = function () {//response
+        //服务器端的响应
+        var str = '';
+        xhr.response.forEach(function (item) {
+            str+=`
+                 <li class="list-group-item">用户名: ${item.username} 密码:${item.password}
+                    <button class="btn btn-danger btn-xs pull-right" onclick="del.call(this,${item.id})">删除</button>
+                </li>
+                `;
+        });
+        document.querySelector('.list-group').innerHTML = str;
+    };
+    xhr.send();
+
     document.querySelector('.sub').addEventListener('click',function () {
         var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
@@ -48,9 +65,29 @@
         //响应回来的内容是用户列表
         xhr.onload = function () {//response
             //服务器端的响应
+            var str = '';
+            xhr.response.forEach(function (item) {
+                str+=`
+                 <li class="list-group-item">用户名: ${item.username} 密码:${item.password}
+                    <button class="btn btn-danger btn-xs pull-right" onclick="del.call(this,${item.id})">删除</button>
+                </li>
+                `;
+            });
+            document.querySelector('.list-group').innerHTML = str;
         };
         xhr.send(JSON.stringify(data));//转换成json字符串发送给服务器端
     },false);
+    //这是删除的方法，接收的参数为id，将id传入给后台，让后台删除掉这一项，返回删除的这一项，最后在前端上也将其删除掉
+    function del(id) {
+        var that = this;//当前that是button对象
+        var xhr = new XMLHttpRequest();
+        xhr.open('DELETE','/del?id='+id,true);
+        xhr.onload = function () {
+            //后台删除成功后的逻辑,删除这一行li
+            that.parentNode.parentNode.removeChild(that.parentNode);
+        };
+        xhr.send();
+    }
 </script>
 </body>
 </html>

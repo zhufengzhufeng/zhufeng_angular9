@@ -22,6 +22,15 @@ http.createServer(function (req,res) {
             //展示给前端的最新数据列表
             res.end(JSON.stringify(users)); //返回最新的用户列表
         });
+    }else if(pathname=='/getuser'){
+        res.end(JSON.stringify(users));
+    }else if(pathname == '/del'){
+        //获取前台传过来的id
+        var id = urlObj.query.id;//获取查询字符串传过来的id,在数组中移除掉当前的id
+        users = users.filter(function (item) {//删除users的某一个
+            return item.id!=id;
+        });
+        res.end(JSON.stringify({}));//删除后默认返回一个空对象即可
     }else{
        fs.exists('.'+pathname,function (exists) {
            if(exists){
