@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-horizontal " >
+    <form class="form-horizontal ">
         <div class="form-group">
             <label for="username" class="control-label col-md-2">用户名</label>
             <div class="col-md-10">
@@ -37,6 +37,7 @@
 -->
 <script>
     //载入页面后先查询一下用户列表
+    //<----查询用户
     var xhr = new XMLHttpRequest();
     xhr.open('GET','/getuser',true);
     xhr.responseType = 'json'; //设置响应回来的内容为json格式
@@ -54,11 +55,11 @@
         document.querySelector('.list-group').innerHTML = str;
     };
     xhr.send();
-
+    // 查询用户---->
     document.querySelector('.sub').addEventListener('click',function () {
         var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
-        var data = {username,password};//key和value名字相同时可以省略
+        var str = `username=${username}&password=${password}`; //a=1&b=2  form表单格式
         var xhr = new XMLHttpRequest();
         xhr.open('POST','/reg',true);
         xhr.responseType = 'json'; //设置响应回来的内容为json格式
@@ -75,7 +76,7 @@
             });
             document.querySelector('.list-group').innerHTML = str;
         };
-        xhr.send(JSON.stringify(data));//转换成json字符串发送给服务器端
+        xhr.send(str);//转换成json字符串发送给服务器端
     },false);
     //这是删除的方法，接收的参数为id，将id传入给后台，让后台删除掉这一项，返回删除的这一项，最后在前端上也将其删除掉
     function del(id) {

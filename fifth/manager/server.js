@@ -2,6 +2,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var mime = require('mime');
+var querystring = require('querystring');
 var users = [];
 http.createServer(function (req,res) {
     var urlObj =  url.parse(req.url,true);
@@ -16,11 +17,14 @@ http.createServer(function (req,res) {
             result+=data;
         });
         req.on('end',function () {
-            var user = JSON.parse(result);
+            //在发送请求时设置请求头的类型
+//json格式采用 JSON.parse application/json
+//querystring采用querystring.parse来解析 application/x-www-form-urlencoded
+           var user = querystring.parse(result);
             user.id = new Date().getTime(); //给每一个用户增加唯一标识
             users.push(user);
             //展示给前端的最新数据列表
-            res.end(JSON.stringify(users)); //返回最新的用户列表
+            res.end(JSON.stringify(users)); //返回最新的用户列表*/
         });
     }else if(pathname=='/getuser'){
         res.end(JSON.stringify(users));

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div ng-controller="myCtrl"></div>
+<script src="angular.js"></script>
+<script>
+    var app = angular.module('appModule',[]);
+    app.controller('myCtrl',function ($http) {
+        //$http是angular给我们提供的获取数据的服务
+        //angular希望把所有的对一个用户列表操作进行封装，服务中，angular提供了一个模块 angular-resource专门用来做restful风格
+        //都是对用户的操作
+        // 如果查询的是一个用户 /user/1 GET
+        // 查询所有用户 /user GET
+        // 删除所有用户 /user DELETE
+        // 删除一个用户 /user/1 DELETE
+        // 增加一个用户 /user   POST
+        // 修改用户   /user PUT   restful风格
+        $http.get('/getAllUser').success(function (data) {
+            console.log(data);
+        });
+        $http.get('/getUser?id=1').success(function (data) {
+            console.log(data);
+        });
+        $http.post('/postUser',{data:1}).success(function (data) {
+            console.log(data);
+        });
+        $http.post('/updateUser',{data:1}).success(function (data) {
+            console.log(data);
+        });
+        $http.post('/deleteUser',{data:1}).success(function (data) {
+            console.log(data);
+        });
+    });
+</script>
+</body>
+</html>
