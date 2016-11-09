@@ -5,7 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-<div ng-controller="myCtrl"></div>
+<div ng-controller="myCtrl">
+    <ul>
+        <li ng-repeat="book in books">
+            <input type="text" ng-model="book.name">
+            {{book.name}}{{book.count}}{{book.price}}
+            <button ng-click="del(book.id)">删除</button>
+            <button >修改</button>
+        </li>
+    </ul>
+</div>
 <script src="angular.js"></script>
 <script src="angular-resource.js"></script>
 <!--安装angular-resource-->
@@ -25,7 +34,14 @@
     });
     app.controller('myCtrl',function ($scope,book) {
         $scope.books = book.query();//查询所有图书，angular会自动转成json类型
-        console.log($scope.books);
+        $scope.del = function (id) {
+            book.delete({id:id}).$promise.then(function () {
+                //删除成功后的操作
+                $scope.books = $scope.books.filter(function (item) {
+                    return item.id!=id;
+                });
+            })
+        }
     });
 </script>
 </body>
