@@ -23,8 +23,9 @@
         //delete 发送一个删除 {id:1} delete 返回的类型是{}
         //update 修改某一个 {id:1} 修改的内容 put 返回的类型是修改的数据
     });
-    app.controller('myCtrl',function (book) {
-        book.update({id:1},{name:2});
+    app.controller('myCtrl',function ($scope,book) {
+        $scope.books = book.query();//查询所有图书，angular会自动转成json类型
+        console.log($scope.books);
     });
 </script>
 </body>

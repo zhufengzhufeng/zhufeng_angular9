@@ -8,39 +8,36 @@ function getBooks(callback) {
         if(err){
             callback(books);
         }else{
-            try {
+            if(data.startsWith('[')){
                 books = JSON.parse(data);
-            }catch(e){
-                books = [];
+            }else{
+                books= [];
             }
             callback(books);
         }
     })
 }
-function setBooks(data,callback) {
-
+function setBooks(data,callback){
+    fs.writeFile('./1.json',JSON.stringify(data),callback);
 }
-setBooks([{name:'angularjs'}],function () {
-    console.log('设置成功');
-});
 http.createServer(function (req,res) {
     var urlObj =  url.parse(req.url,true);
     var pathname = urlObj.pathname;
     if(pathname == '/'){
         res.setHeader('Content-Type','text/html;charset=utf8');
-        fs.createReadStream('./index.html').pipe(res);
-    }else if(/^\/user(\/\d+)?$/.test(pathname)){
+        fs.createReadStream('./index1.html').pipe(res);
+    }else if(/^\/book(\/\d+)?$/.test(pathname)){
         //匹配到说明走到了对应路由中 get post delete put
         //获取数据的方法
-        var matcher = pathname.match(/^\/user(\/\d+)?$/)[1];
+        var matcher = pathname.match(/^\/book(\/\d+)?$/)[1];
         switch (req.method){
             case 'GET':
                 if(matcher){ //获取一个
-
                 }else{ //获取所有
-                   getBooks(function (data) {
-                       console.log(data);
-                   });
+                    //将所有数据写入到浏览器中
+                    getBooks(function (data) { //获取所有图书
+                        res.end(JSON.stringify(data));
+                    });
                 }
                 break;
             case 'POST':
