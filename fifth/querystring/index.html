@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<div class="container">
+    <form class="form-horizontal " >
+        <div class="form-group">
+            <label for="username" class="control-label col-md-2">用户名</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="username" placeholder="请输入用户名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label col-md-2">密码</label>
+            <div class="col-md-10">
+                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-lg btn-success sub" type="button">注册</button>
+            </div>
+        </div>
+    </form>
+    <ul class="list-group">
+
+    </ul>
+</div>
+<!--
+    1.点击按钮时获取 账号和密码的 value值组成json传递给服务器端
+    2.服务器端获取数据，放到数组中，将数据返回给浏览器端,
+    3.浏览器遍历数据将数据生成到页面中的ul内
+-->
+<script>
+    //载入页面后先查询一下用户列表
+    //<----查询用户
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','/getuser',true);
+    xhr.responseType = 'json'; //设置响应回来的内容为json格式
+    //响应回来的内容是用户列表
+    xhr.onload = function () {//response
+        //服务器端的响应
+        var str = '';
+        xhr.response.forEach(function (item) {
+            str+=`
+                 <li class="list-group-item">用户名: ${item.username} 密码:${item.password}
+                    <button class="btn btn-danger btn-xs pull-right" onclick="del.call(this,${item.id})">删除</button>
+                </li>
+                `;
+        });
+        document.querySelector('.list-group').innerHTML = str;
+    };
+    xhr.send();
+    // 查询用户---->
+    document.querySelector('.sub').addEventListener('click',function () {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var data = {username,password};//key和value名字相同时可以省略
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST','/reg',true);
+        xhr.responseType = 'json'; //设置响应回来的内容为json格式
+        //响应回来的内容是用户列表
+        xhr.onload = function () {//response
+            //服务器端的响应
+            var str = '';
+            xhr.response.forEach(function (item) {
+                str+=`
+                 <li class="list-group-item">用户名: ${item.username} 密码:${item.password}
+                    <button class="btn btn-danger btn-xs pull-right" onclick="del.call(this,${item.id})">删除</button>
+                </li>
+                `;
+            });
+            document.querySelector('.list-group').innerHTML = str;
+        };
+        xhr.send(JSON.stringify(data));//转换成json字符串发送给服务器端
+    },false);
+    //这是删除的方法，接收的参数为id，将id传入给后台，让后台删除掉这一项，返回删除的这一项，最后在前端上也将其删除掉
+    function del(id) {
+        var that = this;//当前that是button对象
+        var xhr = new XMLHttpRequest();
+        xhr.open('DELETE','/del?id='+id,true);
+        xhr.onload = function () {
+            //后台删除成功后的逻辑,删除这一行li
+            that.parentNode.parentNode.removeChild(that.parentNode);
+        };
+        xhr.send();
+    }
+</script>
+</body>
+</html>
