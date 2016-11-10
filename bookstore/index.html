@@ -68,12 +68,29 @@
     });
     app.controller('detailCtrl',function ($scope,$location,$routeParams,book) {
         //获取列表页面传过来的nid
-        // /book/detail/:nid   /book/detail/3=>{nid:3}
+        // /book/detail/:eid   /book/detail/3=>{eid:3}
         var bookid = $routeParams.nid;
         //去后台查询当前的信息的内容 id:1 name,price,cover
         $scope.book = book.get({id:bookid}); //查询一本书的信息将内容放入到book中
         $scope.goBack = function () {
             $location.path('/book/list');
+        };
+        //删除操作
+        $scope.del = function (b) {
+            //book.delete({id:b.id});//angular帮我们做了一个操作
+            book.delete(b).$promise.then(function () {
+                $location.path('/book/list');
+            });//只需传入一个当前要删除的那一项会自动搜索id拼到路径上
+        };
+        //控制修改输入的隐藏或者显示
+        $scope.show = false;
+        //确认修改
+        $scope.confirm = function () { //修改的操作
+            //$scope.book;//当我点击时 $scope.book 最新的状态需要保存
+            book.update({id:$scope.book.id},{book: $scope.book}).$promise.then(function () {
+                $scope.show = false;
+            });
+            //           在url中             在请求体中
         }
     });
     app.controller('listCtrl',function ($scope,$location,book) { //$location ng-route提供的跳转页面的方法

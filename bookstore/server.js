@@ -31,8 +31,45 @@ http.createServer(function (req,res) {
                 }
                 break;
             case 'PUT':
+                //在url中获取id  在请求体中获取数据
+                if(matcher){
+                   var bookid =  matcher.slice(1); //需要更改图书的id号
+                   var result = '';
+                   req.on('data',function (data) {
+                       result += data ;
+                   });
+                   req.on('end',function () {
+                        var book = JSON.parse(result).book;//把那个id的内容改成什么
+                        getBooks(function (data) {
+                            data = data.map(function (item) {
+                                if(item.id==bookid){
+                                    return book; //替换操作
+                                }
+                                return item;
+                            });
+                            setBooks(data,function () {
+                                res.end(JSON.stringify(book));
+                            });
+                        });
+                   })
+                }
+
+
+
                 break;
             case 'DELETE':
+                //要获取传入的id
+                if(matcher){
+                    var bookid = matcher.slice(1);
+                    getBooks(function (data) {
+                        data = data.filter(function (item) {
+                            return item.id != bookid;
+                        });
+                        setBooks(data,function () {
+                            res.end(JSON.stringify({}));
+                        });
+                    });
+                }
                 break;
             case 'POST':
                 //获取传过来的请求体 req可读流
@@ -43,7 +80,8 @@ http.createServer(function (req,res) {
                 req.on('end',function () {
                     var book = JSON.parse(result); //获取数据后写入到json文件中
                     getBooks(function (data) {
-                        book.id =data.length+1; //加一个id属性作为每本书唯一的标识
+                        //如果没有数据则为1 有的话取数组的最后一项的id+1
+                        book.id =!data.length?1:data[data.length-1].id+1; //加一个id属性作为每本书唯一的标识
                         data.push(book);
                         setBooks(data,function () {
                             //增加方法需要返回增加的那一项

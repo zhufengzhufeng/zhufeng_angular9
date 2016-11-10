@@ -1,14 +1,18 @@
 <div class="panel  panel-warning">
     <div class="panel-heading text-center">
-        {{book.name}}
+        <span ng-hide="show">{{book.name}}</span>
+        <input type="text" ng-model="book.name" ng-show="show">
         <button class="btn pull-right btn-xs" ng-click="goBack()">返回</button>
     </div>
     <div class="panel-body text-center">
         <img ng-src="{{book.cover}}">
     </div>
     <div class="panel-footer text-center">
-        价格 {{book.price}}
-        <button>修改</button>
-        <button>删除</button>
+        价格
+        <span ng-hide="show">{{book.price}}</span>
+        <input type="text" ng-model="book.price" ng-show="show">
+        <button class="btn btn-warning" ng-click="show=true">修改</button>
+        <button class="btn btn-danger" ng-click="del(book)" ng-hide="show">删除</button>
+        <button ng-show="show" class="btn btn-success" ng-click="confirm()">确认修改</button>
     </div>
 </div>
