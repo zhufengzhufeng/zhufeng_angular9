@@ -14,7 +14,15 @@ http.createServer(function (req,res) {
         switch (req.method) {
             case 'GET':
                 if(matcher){
-
+                    //获取传入的id
+                    var id = matcher.slice(1);
+                    getBooks(function (data) {
+                        //去所有书中找到id匹配的那一本书
+                        var book = data.find(function (item) {
+                            return item.id==id;//如果为true返回那一项
+                        });
+                        res.end(JSON.stringify(book));
+                    });
                 }else{
                     getBooks(function (data) {
                         res.setHeader('Content-Type','application/json;charset=utf8');

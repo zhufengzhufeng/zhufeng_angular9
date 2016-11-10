@@ -1,13 +1,13 @@
 <div class="panel  panel-warning">
     <div class="panel-heading text-center">
-        javascript
+        {{book.name}}
         <button class="btn pull-right btn-xs" ng-click="goBack()">返回</button>
     </div>
     <div class="panel-body text-center">
-        <img src="http://img2.imgtn.bdimg.com/it/u=2842294331,2206009303&fm=21&gp=0.jpg" alt="">
+        <img ng-src="{{book.cover}}">
     </div>
     <div class="panel-footer text-center">
-        价格
+        价格 {{book.price}}
         <button>修改</button>
         <button>删除</button>
     </div>

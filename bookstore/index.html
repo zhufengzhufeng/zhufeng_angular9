@@ -15,7 +15,6 @@
             <ul class="nav navbar-nav">
                 <li><a href="#/">首页</a></li>
                 <li><a href="#/book/list">图书列表</a></li>
-                <li><a href="#/book/detail">图书详情</a></li>
                 <li><a href="#/book/add">图书管理</a></li>
             </ul>
         </div>
@@ -47,7 +46,7 @@
         }).when('/book/list',{ //书的列表
             templateUrl:'tmpl/list.html',
             controller:'listCtrl'
-        }).when('/book/detail',{ //书的详情
+        }).when('/book/detail/:nid',{ //书的详情
             templateUrl:'tmpl/detail.html',
             controller:'detailCtrl'
         }).otherwise('/');//以上都不满足跳转到首页
@@ -67,7 +66,12 @@
             });
         }
     });
-    app.controller('detailCtrl',function ($scope,$location) {
+    app.controller('detailCtrl',function ($scope,$location,$routeParams,book) {
+        //获取列表页面传过来的nid
+        // /book/detail/:nid   /book/detail/3=>{nid:3}
+        var bookid = $routeParams.nid;
+        //去后台查询当前的信息的内容 id:1 name,price,cover
+        $scope.book = book.get({id:bookid}); //查询一本书的信息将内容放入到book中
         $scope.goBack = function () {
             $location.path('/book/list');
         }
@@ -76,8 +80,8 @@
         //window.location.href
         //去详情页面的方法
         $scope.books = book.query(); //返回一个数组类型
-        $scope.goDetail = function () {
-            $location.path('/book/detail');
+        $scope.goDetail = function (id) {
+            $location.path('/book/detail/'+id);
         }
     });
 </script>
