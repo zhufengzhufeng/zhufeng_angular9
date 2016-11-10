@@ -8,10 +8,10 @@
 <div class="panel panel-primary col-md-4" ng-repeat="book in books track by $index">
     <div class="panel-heading">{{book.name}}</div>
     <div class="panel-body">
-        <img ng-src="{{book.cover}}" alt="">
+        <img ng-src="{{book.cover}}">
     </div>
     <div class="panel-footer">
-        价格:{{book.price}}
+        价格:{{book.price | currency:'￡'}}
         <button ng-click="goDetail(book.id)">查看详情</button>
     </div>
 </div>

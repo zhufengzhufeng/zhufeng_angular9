@@ -27,6 +27,22 @@ http.createServer(function (req,res) {
             case 'DELETE':
                 break;
             case 'POST':
+                //获取传过来的请求体 req可读流
+                var result = '';
+                req.on('data',function (data) {
+                    result+=data;
+                });
+                req.on('end',function () {
+                    var book = JSON.parse(result); //获取数据后写入到json文件中
+                    getBooks(function (data) {
+                        book.id =data.length+1; //加一个id属性作为每本书唯一的标识
+                        data.push(book);
+                        setBooks(data,function () {
+                            //增加方法需要返回增加的那一项
+                            res.end(JSON.stringify(book));
+                        });
+                    });
+                });
                 break;
         }
     }else {

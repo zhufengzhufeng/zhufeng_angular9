@@ -57,8 +57,15 @@
     app.controller('indexCtrl',function ($scope) {
         $scope.logo = '珠峰培训';
     });
-    app.controller('addCtrl',function ($scope) {
-
+    app.controller('addCtrl',function ($scope,book,$location) {
+        //增加图书 获取书的封面 价格 名字
+        $scope.book = {}; //存放增加书的所有信息
+        $scope.submit = function () {
+            //调用保存的方法即可
+            book.save($scope.book).$promise.then(function () {
+                $location.path('/book/list');
+            });
+        }
     });
     app.controller('detailCtrl',function ($scope,$location) {
         $scope.goBack = function () {
