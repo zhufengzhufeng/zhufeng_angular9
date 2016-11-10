@@ -79,3 +79,4 @@ http.createServer(function (req,res) {
 * 实现增加图书的功能 book.save({name,price,count}),保存到json中需要增加一个唯一的id
 * 修改图书 book.update({id:1},{id:1,name:2}) map方法
 * */
+

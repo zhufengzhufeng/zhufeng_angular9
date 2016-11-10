@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="#/" class="navbar-brand">珠峰书店</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="#/">首页</a></li>
+                <li><a href="#/book/list">图书列表</a></li>
+                <li><a href="#/book/detail">图书详情</a></li>
+                <li><a href="#/book/add">图书管理</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div ng-view class="container"></div>
+
+<script src="node_modules/angular/angular.js"></script>
+<script src="node_modules/angular-resource/angular-resource.js"></script>
+<script src="node_modules/angular-route/angular-route.js"></script>
+<script>
+    var app = angular.module('appModule',['ngResource','ngRoute']);
+    //要配置路由，每一个路由使用某一个具体的页面 (路由中提供了一个$route的服务)
+    //封装对图书管理的服务
+    app.factory('book',function ($resource) {
+        return $resource('/books/:id',null,{
+            update:{
+                method:'PUT'
+            }
+        });
+    });
+    app.config(function ($routeProvider) { //配置路由中的服务
+        $routeProvider.when('/',{ //书店的首页
+            templateUrl:'tmpl/index.html',
+            controller:'indexCtrl'
+        }).when('/book/add',{//增加图书
+            templateUrl:'tmpl/add.html',
+            controller:'addCtrl'
+        }).when('/book/list',{ //书的列表
+            templateUrl:'tmpl/list.html',
+            controller:'listCtrl'
+        }).when('/book/detail',{ //书的详情
+            templateUrl:'tmpl/detail.html',
+            controller:'detailCtrl'
+        }).otherwise('/');//以上都不满足跳转到首页
+        //路由 访问不同的路径显示不同的内容
+        //# 不刷新页面并且改变url路径，而且会产生历史管理
+    });
+    app.controller('indexCtrl',function ($scope) {
+        $scope.logo = '珠峰培训';
+    });
+    app.controller('addCtrl',function ($scope) {
+
+    });
+    app.controller('detailCtrl',function ($scope,$location) {
+        $scope.goBack = function () {
+            $location.path('/book/list');
+        }
+    });
+    app.controller('listCtrl',function ($scope,$location,book) { //$location ng-route提供的跳转页面的方法
+        //window.location.href
+        //去详情页面的方法
+        $scope.books = book.query(); //返回一个数组类型
+        $scope.goDetail = function () {
+            $location.path('/book/detail');
+        }
+    });
+</script>
+</body>
+</html>
